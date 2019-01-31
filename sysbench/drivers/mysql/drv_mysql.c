@@ -701,6 +701,11 @@ static int check_error(db_conn_t *sb_con, const char *func, const char *query)
     log_text(LOG_ALERT, "%s returned error %u (%s)",
              func, error, mysql_error(con));
 
+  if (error == 1060 || error == 1061 ||
+      error == 1072 || error == 1091 ||
+      error == 1170)
+    return SB_DB_ERROR_NONE;
+
   return SB_DB_ERROR_FAILED;
 }
 
